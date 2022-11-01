@@ -1,0 +1,92 @@
+{
+    "组织层级":[{
+      "step_name": "0.登录",
+      "system": "C4",
+      "login_user": "sys_admin",
+      "owner": "yuanyuan_vendor",
+      "loop_time": "",
+      "timeout": 5
+    },
+      {
+      "step_name": "1.新建群组",
+      "system": "C4",
+      "login_user": "",
+      "api_name_grpc": "",
+      "call_classname": "OrgApi()",
+      "call_func_name": "add_org",
+      "request": {
+        "name": "&{random_str('接口新建路局')}",
+        "parent_id": 1,
+        "usergroup_enabled": 0,
+        "lines": []
+      },
+      "assertions": {
+        "status_code": 200,
+        "msg": "",
+        "code": 0
+      },
+      "return_data": {
+        "org_id": "data.org_id"
+      }
+    },
+    {
+      "step_name": "2.列出组织层级树",
+      "system": "C4",
+      "login_user": "",
+      "api_name_grpc": "ListOrgTree",
+      "call_classname": "",
+      "call_func_name": "",
+      "request": {},
+      "assertions": {
+        "status_code": 200,
+        "msg": "",
+        "code": 0
+      },
+      "return_data": {
+        "org_id1": "data.0.children.24.id"
+      }
+    },
+    {
+      "step_name": "3.修改组织层级",
+      "system": "C4",
+      "login_user": "",
+      "api_name_grpc": "UpdateOrg",
+      "call_classname": "",
+      "call_func_name": "",
+      "params": "",
+      "request": {
+        "org_id": "{{org_id}}",
+        "name": "&{random_str('接口修改路局')}",
+        "parent_id": 1,
+        "usergroup_enabled": 0,
+        "lines": []
+      },
+      "assertions": {
+        "status_code": 200,
+        "msg": "success",
+        "code": 0
+      },
+      "return_data": {
+      }
+    },
+    {
+      "step_name": "4.删除组织层级",
+      "system": "C4",
+      "login_user": "",
+      "api_name_grpc": "DeleteOrg",
+      "call_classname": "",
+      "call_func_name": "",
+      "params": "",
+      "request": {
+        "org_id": "{{org_id}}"
+      },
+      "assertions": {
+        "status_code": 200,
+        "msg": "success",
+        "code": 0
+      },
+      "return_data": {
+      }
+    }
+]
+}

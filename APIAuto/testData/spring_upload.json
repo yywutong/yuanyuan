@@ -1,0 +1,138 @@
+{
+    "上传原始数据集": [
+
+      {
+      "step_name": "0.登录",
+      "system": "spring",
+      "login_user": "user",
+      "owner": "yuanyuan_vendor",
+      "timeout": 5
+    },
+
+      {
+      "step_name": "1.校验名称",
+      "system": "spring",
+      "login_user": "",
+      "api_name_grpc": "",
+      "api_name_http": "/resource/v1/api/resource/check/name",
+      "method": "GET",
+      "call_classname": "",
+      "call_func_name": "",
+      "global_variable": {
+        "resourceName": "&{random_str('接口上传资源')}"
+      },
+      "params": "?resourceName={{resourceName}}",
+      "request": {
+      },
+      "assertions": {
+        "status_code": 200,
+        "errorMsg": "成功",
+        "errorCode": "0"
+      },
+      "return_data": {
+      }
+    },
+
+      {
+      "step_name": "2.创建上传任务",
+      "system": "spring",
+      "login_user": "",
+      "api_name_grpc": "",
+      "api_name_http": "/resource/v1/api/resource/precreate",
+      "method": "POST",
+      "call_classname": "",
+      "call_func_name": "",
+      "global_variable": [
+        {"file_path": "D:/03.spring项目/all_images 2.zip"},
+        {"file_data": "&{open('{{file_path}}', 'rb').read(6291456)}"},
+        {"file_name": "&{get_filename('{{file_path}}')}"},
+        {"file_size": "&{get_filesize('{{file_path}}')}"},
+        {"total_chunk": "&{math.ceil({{file_size}} / 6291456)}"},
+        {"identifier": "&{hashlib.md5({{file_data}}).hexdigest()}"}
+      ],
+      "params": "?fileName={{file_name}}&fileSize={{file_size}}&resourceId=&resourceType=RAW_DATASET&totalChunk={{total_chunk}}",
+      "files": {"file": "&{('{{file_name}}', '{{file_data}}')}"},
+      "request": {
+      },
+      "assertions": {
+        "status_code": 200,
+        "errorMsg": "成功",
+        "errorCode": "0"
+      },
+      "return_data": {
+        "uploadId": "data.uploadId"
+      }
+    },
+
+      {
+      "step_name": "3.上传",
+      "system": "spring",
+      "loop_num": "{{total_chunk}}",
+      "loop_step": "",
+      "login_user": "",
+      "api_name_grpc": "",
+      "api_name_http": "/resource/v1/api/resource/upload",
+      "method": "POST",
+      "call_classname": "",
+      "call_func_name": "",
+      "params": "",
+      "body": {
+        "chunkNumber": "{{loop_index}}",
+        "identifier": "{{identifier}}",
+        "totalChunks": "{{total_chunk}}",
+        "uploadId": "{{uploadId}}"
+      },
+      "request": {
+      },
+      "assertions": {
+        "status_code": 200,
+        "errorMsg": "成功",
+        "errorCode": "0"
+      },
+      "return_data": {
+      }
+    },
+
+      {
+      "step_name": "4.创建",
+      "system": "spring",
+      "login_user": "",
+      "api_name_grpc": "",
+      "api_name_http": "/resource/v1/api/resource/upload/create",
+      "method": "POST",
+      "call_classname": "",
+      "call_func_name": "",
+      "params": "",
+      "body": {
+        "labelUploadId":"",
+        "mappingUploadId":"",
+        "resourceId":"",
+        "configName":"",
+        "uploadId":"{{uploadId}}",
+        "labelConfig":"",
+        "equipment":"",
+        "labelDictId":"",
+        "resourceType":"RAW_DATASET",
+        "modelType":"",
+        "modelName":"",
+        "opType":"",
+        "modelFormat":"",
+        "servicePath":"",
+        "name":"{{resourceName}}",
+        "uploadType":"LOCAL",
+        "desc":"",
+        "creator":"yuanyuan_vendor"
+      },
+      "request": {
+      },
+      "assertions": {
+        "status_code": 200,
+        "errorMsg": "成功",
+        "errorCode": "0"
+      },
+      "return_data": {
+        "uploadId": "data.uploadId"
+      }
+    }
+]
+}

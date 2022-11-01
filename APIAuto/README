@@ -1,0 +1,149 @@
+# 1. 安装部署  
+## 1.1 调GRpc接口环境
+`pip install grpcio`  
+`pip install grpcio-tools`  
+proto文件转.py文件命令：  
+`cd proto`  
+`python  -m grpc_tools.protoc -I. --python_out=./gen --grpc_python_out=./gen c4_platform.proto`
+
+## 1.2 allure环境
+- 下载allure：https://github.com/allure-framework/allure2/releases
+- 将allure的bin目录添加到path环境变量
+- 重打开一个cmd窗口，执行`allure`验证是否配置成功
+- 安装allure-pytest:`pip install allure-pytest`  
+
+# 2. 执行用例生成报告  
+qa_auto目录下执行
+- 执行用例：`pytest <测试目录> --alluredir <测试结果存放目录>`   
+例如：`pytest testC4/testCase --alluredir testC4/testReport/allureRaw`
+- 生成报告：`allure generate <allure测试结果目录> -o <存放报告的目录> --clean`  
+例如：`allure generate testC4/testReport/allureRaw -o testC4/testReport/allureReport --clean`
+- 查看测试报告：右键文件testReport/allureReport/index.html--open in browser选择浏览器打开
+
+# 3. 用例编写介绍  
+## 3.1 目录结构说明  
+    testC4
+    ├─apiCommon      接口封装，一个模块一个py文件 
+    ├─baseRequest    框架基础方法
+    ├─testCase       测试用例，一个模块一个py文件
+    ├─testData       测试数据，一个模块一个文件夹
+    └─testReport     测试报告
+        ├─allureRaw          测试数据
+        ├─allureReport       html测试报告
+    ├─config.ini     环境配置
+    ├─pre_func.py    testData中参数调用的方法   
+
+## 3.2 用例编写  
+### 3.2.1 testData书写格式  
+一条测试用例对应一个json文件
+```text
+{
+    "组织层级":[{                     -------用例名称                  
+      "step_name": "0.登录",          -------步骤名
+      "system": "C4",                 -------测试系统，根据此字段判断获取对应系统的host
+      "login_user": "sys_admin",      -------登录账号参数名，参考config.ini
+      "owner": "yuanyuan_vendor",
+      "loop_time": "",
+      "timeout": 5
+    },
+      {
+      "step_name": "1.新建群组",
+      "system": "C4",
+      "login_user": "",              -------测试步骤中如果需要切换账号登录就重新配置
+      "api_name_grpc": "",           -------GRpc接口名
+      "call_classname": "OrgApi()",  -------apiCommon中封装的方法对应的类名，类名后面有括号
+      "call_func_name": "add_org",   -------apiCommon中封装的方法名
+      "request": {                   -------call_func_name的请求参数
+        "name": "&{random_str('接口新建路局')}",   -----调用pre_func.py中封装的方法，书写格式: &{方法名()}
+        "parent_id": 1,
+        "usergroup_enabled": 0,
+        "lines": []
+      },
+      "assertions": {                -------响应断言
+        "status_code": 200,
+        "msg": "",
+        "code": 0
+      },
+      "return_data": {               -------获取接口返回的值
+        "org_id": "data.org_id"      -------书写格式：data.0.org_id
+      }
+    },
+    {
+      "step_name": "2.修改组织层级",
+      "system": "C4",
+      "login_user": "",              
+      "api_name_grpc": "UpdateOrg",
+      "call_classname": "",
+      "call_func_name": "",
+      "params": "",
+      "request": {                  -------UpdateOrg接口请求参数 
+        "org_id": "{{org_id}}",     -------将上一个接口返回的值传给这个参数，书写格式：{{参数名}}，
+                                           参数名需要与上一个接口返回的值的参数一样
+        "name": "&{random_str('接口修改路局')}",
+        "parent_id": 1,
+        "usergroup_enabled": 0,
+        "lines": []
+      },
+      "assertions": {
+        "status_code": 200,
+        "msg": "success",
+        "code": 0
+      },
+      "return_data": {
+      }
+    }
+]
+}
+```
+
+### 3.2.2 pre_func.py  
+调用pre_func.py里面的方法时不支持入参数是上一个接口返回的值  
+例如：`random_str({{org_id}})`,这个org_id需要获取步骤2返回的org_id的值。这种是不支持的。  
+
+### 3.2.3 接口公共方法封装书写格式  
+一个模块的接口封装写在一个py文件中
+```python
+from testC4.baseRequest.base_grpc_request import *
+from testC4.baseRequest.parse_file import *
+
+AddOrg = 'AddOrg'     # -------接口名
+ListOrgTree = 'ListOrgTree'
+
+
+class OrgApi(object):
+    def __init__(self):
+        self.req = BaseGRpcRequest()
+        self.cf = GetConfig()
+        self.parse = ParseFile()
+
+    # 这里只封装了一个接口的案例，一般是一个业务流，
+    # 测试中经常使用的业务，避免每次用例都要写一遍
+    def add_org(self, host, token, **request):
+        resp = self.req.base_request(api_name=AddOrg, host=host, token=token, **request)
+        return resp
+```
+
+### 3.2.4 测试用例书写格式  
+一个模块的接口用例写在一个py文件中
+```python
+import pytest
+import allure
+from testC4.baseRequest.grpc_request import *
+
+org_data_test = 'org/data_org_1.json'     # ----testData文件路径
+repeat_create_org = 'org/data_org.json'
+org_user_group_enabled = 'org/data_org_list_enabled.json'
+
+@allure.feature("组织层级管理")       # -----测试模块名
+class TestOrg(object):
+
+    @allure.severity("normal")            #用例等级：blocker  、critical  、normal  、minor  、trivial
+    @allure.story("新建-查询-修改-删除")  # -----接口名或测试用例名，如果一个接口只有一条用例时可以不需要。这块后面可以重新定义。
+    def test_list_org_tree(self):
+        GRpcRequest().send_grpc_request(org_data_test)  # ------入参是testData文件路径
+
+    @allure.severity("normal")
+    @allure.story("列出已启用的群组")
+    def test_repeat_create_org(self):
+        GRpcRequest().send_grpc_request(org_user_group_enabled)
+```

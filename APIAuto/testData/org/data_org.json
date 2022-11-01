@@ -1,0 +1,53 @@
+{
+    "组织层级":[{
+      "step_name": "0.登录",
+      "system": "C4",
+      "login_user": "sys_admin",
+      "owner": "yuanyuan_vendor",
+      "loop_time": "",
+      "timeout": 5
+    },
+      {
+      "step_name": "1.新建群组",
+      "system": "C4",
+      "login_user": "",
+      "api_name_grpc": "AddOrg",
+      "call_classname": "",
+      "call_func_name": "",
+      "request": {
+        "name": "接口新建路局",
+        "parent_id": 1,
+        "usergroup_enabled": 0,
+        "lines": []
+      },
+      "assertions": {
+        "status_code": 200,
+        "msg": "机构名称已存在",
+        "code": 0
+      },
+      "return_data": {
+      }
+    },
+      {
+      "step_name": "1.新建群组",
+      "system": "C4",
+      "login_user": "",
+      "api_name_grpc": "AddOrg",
+      "call_classname": "",
+      "call_func_name": "",
+      "request": {
+        "name": "接口新建路局",
+        "parent_id": 1,
+        "usergroup_enabled": 0,
+        "lines": []
+      },
+      "assertions": {
+        "status_code": 200,
+        "msg": "机构名称已存在",
+        "code": 0
+      },
+      "return_data": {
+      }
+    }
+]
+}

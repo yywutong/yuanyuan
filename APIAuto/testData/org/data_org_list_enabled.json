@@ -1,0 +1,28 @@
+{
+    "列出已启用用户组的组织树":[{
+      "step_name": "0.登录",
+      "system": "C4",
+      "login_user": "sys_admin",
+      "owner": "yuanyuan_vendor",
+      "loop_time": "",
+      "timeout": 5
+    },
+      {
+      "step_name": "1.列出已启用用户组的组织树",
+      "system": "C4",
+      "login_user": "",
+      "api_name_grpc": "ListOrgTreeWithUsergroupEnabled",
+      "call_classname": "",
+      "call_func_name": "",
+      "request": {
+      },
+      "assertions": {
+        "status_code": 200,
+        "msg": "",
+        "code": 0
+      },
+      "return_data": {
+      }
+    }
+]
+}
