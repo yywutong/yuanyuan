@@ -48,15 +48,49 @@ def _quick_sort2(li, left, right):
 
 
 def quick_sort2(li):
-    _quick_sort2(li, 0, len(li)-1)
+    _quick_sort2(li, 0, len(li) - 1)
+
+
+def sift(li, low, high):
+    """
+    调整函数
+    :param li: 列表
+    :param low: 堆的根节点位置
+    :param high: 堆的最后一个堆元素的位置
+    :return:
+    """
+    i = low  # i开始指向根节点位置
+    j = 2 * i + 1  # j开始指向左孩子
+    temp = li[low]  # 把堆顶元素暂存起来
+    while j <= high:  # j的位置有数
+        if j + 1 <= high and li[j + 1] > li[j]:  # 如果右孩子存在 且右孩子比左孩子大。 使用if li[j+1]:来判断右孩子是否存在会下标越界。
+            j = j + 1      # 则j指向右孩子
+        if li[j] > temp:   # 如果大的孩子比堆顶大
+            li[i] = li[j]  # 则将大的孩子放在i（堆顶）位置。 不能使用li[low] = li[j] 因为循环过程中，堆顶会变
+            i = j          # i再向下移动一层，继续下一个循环使用
+            j = 2 * i + 1  # j重新指向左孩子，继续下一个循环使用
+        else:  # 如果对顶更大
+            li[i] = temp  # 则将temp在某一级领导位置上。
+            break
+    else:
+        li[i] = temp  # 把temp放到叶子节点上。
+
+
+def heap_sort(li):
+    n = len(li)
+    # 从孩子找父亲：(j-1)//2。len(li)-1是最后一个元素的位置，则(len(li)-2)//2是他父亲的位置。
+    for i in range((n - 2) // 2, -1, -1):  # 遍历堆顶的位置，反向遍历，遍历到0
+        sift(li, i, n - 1)
+    for i in range(n - 1, -1, -1):   # i一直指向堆的最后一个位置。
+        li[0], li[i] = li[i], li[0]  # 对顶元素和堆的最后一个元素调换位置。
+        sift(li, 0, i - 1)   # i-1是新的high，每次调整后堆的最后一个元素往前移一个。
 
 
 if __name__ == '__main__':
-
-    li = list(range(10000))
-    # random.shuffle(li)  # 将列表顺序打乱
+    li = list(range(100))
+    random.shuffle(li)  # 将列表顺序打乱
     # quick_sort2(li)
     # print(li)
 
-    tmp_index = random.randint(0,len(li)-1)
-    print(tmp_index)
+    heap_sort(li)
+    print(li)
