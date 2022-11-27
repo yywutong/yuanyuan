@@ -1,0 +1,141 @@
+default:
+  uniall:
+    global_alert: True
+    mail: True
+    wchook: True
+    wechat: False
+    dingtalk: False
+  argocd:
+    url: 'https://argocd.sensespring.local:4433'
+    bearer: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2M2MxNTJkZi1hNDY1LTQ1ODEtOWFiNi1lYTdmNzFiOGYwNjUiLCJpYXQiOjE2MTkwODU3MzcsImlzcyI6ImFyZ29jZCIsIm5iZiI6MTYxOTA4NTczNywic3ViIjoiYWRtaW4ifQ.8zOFA8EkPnMgEHAoRy5WiAgY4jTU0IJv7CJovfDiwDc'
+    sync_timeout: 30
+    health_timeout: 240
+  fallen:
+    missing: '__MISSING__'
+    wo_id: 'id'
+    title_id: 'title'
+    form_data_id: 'form_data'
+    subform_version_info_id: 'subform_version_info_id'
+    wotype_id: 'input_wotype_id'
+    git_addr_id: 'input_git_addr_id'
+    deploy_app_id: 'input_deploy_app_id'
+    select_deploy_app_id: 'select_deploy_app_id'
+    deploy_branch_id: 'input_deploy_branch_id'
+    deploy_version_id: 'input_deploy_version_id'
+    deploy_release_version_id: 'input_deploy_release_version_id'
+    deploy_cluster_id: 'select_deploy_cluster_id'
+    order_create_email_id: 'input_order_creator_email_id'
+    other_senders_emails_id: 'input_other_senders_emails_id'
+    mysql:
+      host: 'mysql-standalone.component.svc.cluster.local'
+      port: 3306
+      # host: '10.53.7.146'
+      # port: 31662
+      username: 'root'
+      password: 'g5fmnyuAWyf1XdGMMgM6'
+      database: 'ferry'
+      charset: 'utf8'
+    redis:
+      host: 'infra-redis-service.component.svc.cluster.local'
+      port: 6379
+      # host: 10.53.7.146
+      # port: 31467
+      password: 'Kjgnj93JKj3je'
+      db: 0
+  gitinfo:
+    git_username: 'spring.robot'
+    git_password: '9TZNfmbHFEvRcNAB'
+    git_path_tmp: '/tmp'
+    ci_username: 'spring.cicd'
+    ci_password: 'Sense.password%40gaoyuan1'
+    ci_repo: 'https://spring.cicd:Sense.password%40gaoyuan1@gitlab.bj.sensetime.com/spring-ee/sense-spring/spring-deploy.git'
+    ci_branch: 'auto_update_deploy'
+    ci_repo_name: 'spring-deploy'
+    ansible_path_tmp: '/tmp'
+    apps_repo: 'https://spring.robot:9TZNfmbHFEvRcNAB@gitlab.bj.sensetime.com/spring-ee/sense-spring-3.x/devops/deploy/apps-standard.git'
+    apps_repo_branch: 'master'
+    kustomize_overlay: '/opt/kustomize'
+  registry:
+    url: 'https://registry.sensetime.com/v2/spring-test/arm64/'
+    username: 'robot$sensespring'
+    password: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzY4NjIzNDIsImlhdCI6MTYwNTc1ODM0MiwiaXNzIjoiaGFyYm9yLXRva2VuLWlzc3VlciIsImlkIjoxMDcsInBpZCI6NDI3LCJhY2Nlc3MiOlt7IlJlc291cmNlIjoiL3Byb2plY3QvNDI3L3JlcG9zaXRvcnkiLCJBY3Rpb24iOiJwdXNoIiwiRWZmZWN0IjoiIn1dfQ.WHdB7U5zcO-loWZ8qAIKK6o_vNX0HTp04KfrHvjICBQ-OeQKi3cQVlZO7V5ppmCVstOOemSjDLBZsk8oKklCUBG3J-6SYSXePs7aJD2FyZncVE55nzJE6sY8HnPRz6cx629X9ZRAc4Iz75rpuPZhLfGCxYSyOQVxDPobtcK3c04FF8qecUxXTY0C-zK8SM0A0nzlBeAoESTM1psGm_QCxfjKd15GHdlJOZs0x7w4QXIk3SFlleJ3FJ3Q5FPfC5C-vY_GfSXydxqykK3wv99OWcldFOihxDCJnV_Qee628TIhwnExrqdZL4cgM4KO8H4q-qH5UXAUKAvyUr0XVR4h9cdab7Az0JuYjg45ccFqupM6D3yIZOnLmkKETwkTX89LxUtdZuEWOZCVQ0qtH1BtePhzpMsX3KMuD8D1LeuH0taulykynXHwDkOwo6zknFdmrp1jDpqC4_IspkQpm6Ei_csTVC1SzyrY2jxWO0orfwQEMB4PKeAt60UJ1sLC-thAfNGtcPp9gEeJZ00H4PEhlsEpswLVbjkmE5cIKVXWNgwIFSt6jBOEtWwmjOShH0YCDx-xQacsSQKWfdHq2-tES3JwvS6SlDXx82g7TilHsRbCGNSDdvUKeteaHdORA9VlejuZARgeoNk2pR-fM5Cph6iFQNg4D2n4eLIvUl1T68Q'
+  standartop:
+    check_workorder: True
+    check_arm64: False
+    repo_url: 'https://spring.robot:9TZNfmbHFEvRcNAB@gitlab.bj.sensetime.com/spring-ee/sense-spring-3.x/devops/deploy/op-standard.git'
+    repo_name: 'op-standard'
+    repo_branch: 'master'
+    git_path_tmp: '/tmp'
+  spring:
+    env_norev:
+      - 'dev'
+      - 'test'
+      - 'demo'
+    check_workorder: True
+    check_arm64: False
+  c4:
+    check_workorder: True
+    check_arm64: False
+    repo_url: 'https://spring.robot:9TZNfmbHFEvRcNAB@gitlab.bj.sensetime.com/spring-ee/sense-spring-3.x/devops/deploy/c4-industry.git' 
+    repo_name: "c4-industry"
+    repo_branch: 'master'
+    git_path_tmp: '/tmp'
+    key_suffix: '.tag'
+    exclude_apps:
+      - NoExclude
+
+  http:
+    # 功能重试次数
+    func_retries: 2
+    # 功能重试时 延迟时间, 单位: 秒
+    func_retry_delay_seconds: 10
+    # http 重试次数
+    http_max_retries: 2
+    # http 超时时间, 单位: 秒
+    http_timeout: 10
+  mail:
+    # restfulAPI 地址
+    api: 'http://sendxmail.sensespring.local:8800/xa2xwd3f6Idy/api/mail'
+    # 邮件格式
+    format: template
+    # 邮件开头
+    title: 'MonitorX'
+    # 发送人
+    tos: 'devops.sensespring@sensetime.com'
+    tos_private: 'zhoushuke@sensetime.com'
+    # 邮件正文中记录的分隔符
+    recordsplit: '^^'
+    # 邮件正文记录的key-value分隔符
+    kvsplit: '||'
+  emailhtml:
+    smtp_host: smtp.partner.outlook.cn
+    smtp_port: 587
+    username: 'scg.sensespringops@sensetime.com'
+    password: 'v53ipBf59qYdBti'
+    from_addr: 'scg.sensespringops@sensetime.com'
+    format: html
+    template: 'template/mail.html.tpl'
+    email_to:
+      - 'devops.sensespring@sensetime.com'
+    email_cc:
+      - 'devops.sensespring@sensetime.com'
+      - 'qa.sensespring@sensetime.com'
+    email_bcc: ''
+  wechat:
+    api: 'https://qyapi.weixin.qq.com'
+    corp_id: 'wwabef62c7cee00dcc'
+    secret: 'Xr1MVypy8Hefn_vYqB5hcK0Ny_wUXXj5afPnS44h1BE'
+    agent_id: '1000002'
+    party_id: '2'
+    user_id: '@all'
+    tag_id: ''
+  wchook:
+    webhook: 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=8928b3dc-8ece-40d0-8077-78705b326092'
+    hook: 'http://sendxmail.sensespring.local:8800/cjg6qwtbxudk'
+    default_receiver: 'devops.sensespring@sensetime.com'
+    extend_role:
+      - 'devops.sensespring@sensetime.com'
+      - 'qa.sensespring@sensetime.com'
+  dingtalk:
+    api: 'https://oapi.dingtalk.com/robot/send?access_token='
+    secret: 'this-is-access-token'

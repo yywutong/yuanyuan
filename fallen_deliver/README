@@ -1,0 +1,14 @@
+# 安装
+python setup.py install
+
+# 生成tar.gz 
+python setup.py sdist
+
+# 生成wheel,生成后会在dist目录下
+python setup.py bdist_wheel
+
+# 参考
+https://github.com/navdeep-G/setup.py/blob/master/setup.py
+
+# 路径
+/usr/local/lib/python3.8/site-packages/fallendeliver-0.1.0-py3.8.egg/
