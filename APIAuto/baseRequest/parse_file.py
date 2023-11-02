@@ -5,8 +5,8 @@
 
 import json
 import re
-from testC4.baseRequest.get_config import *
-from testC4.pre_func import *
+from APIAuto.baseRequest.get_config import *
+from APIAuto.pre_func import *
 from utils.HandleLogging import *
 logger = HandleLogging(file_name="test").getlog()
 

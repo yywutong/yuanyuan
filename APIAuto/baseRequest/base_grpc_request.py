@@ -6,7 +6,7 @@
 import os
 from google.protobuf.json_format import MessageToDict
 from client.GrpcClient import GrpcClient
-from testC4.baseRequest.parse_file import *
+from APIAuto.baseRequest.parse_file import *
 from utils.HandleLogging import HandleLogging
 logger = HandleLogging(file_name="test").getlog()
 import baseconfig

@@ -5,7 +5,7 @@
 
 import allure
 import pytest
-from testC4.baseRequest.grpc_request import *
+from APIAuto.baseRequest.grpc_request import *
 
 update_user_data = 'user/update_user_data.json'
 

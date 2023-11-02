@@ -5,7 +5,7 @@
 
 import pytest
 import allure
-from testC4.baseRequest.grpc_request import *
+from APIAuto.baseRequest.grpc_request import *
 
 org_data_test = 'org/data_org_1.json'
 repeat_create_org = 'org/data_org.json'

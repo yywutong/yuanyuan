@@ -7,10 +7,10 @@
 import base64, ast
 import importlib
 from utils.HandleGrpcRes import *
-from testC4.baseRequest.assertions import *
-from testC4.baseRequest.base_grpc_request import *
-from testC4.baseRequest.parse_file import *
-from testC4.baseRequest.reportFormat import *
+from APIAuto.baseRequest.assertions import *
+from APIAuto.baseRequest.base_grpc_request import *
+from APIAuto.baseRequest.parse_file import *
+from APIAuto.baseRequest.reportFormat import *
 from lib.request_http import *
 from lib.parse_data import *
 
@@ -161,6 +161,4 @@ class GRpcRequest(object):
         return return_data
 
 
-if __name__ == '__main__':
-    a = 1
-    print(a)
+

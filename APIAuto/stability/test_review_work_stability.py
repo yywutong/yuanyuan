@@ -2,7 +2,7 @@
 
 
 import pytest
-from testC4.util.api_func import *
+from APIAuto.util.api_func import *
 from utils.HandleThreadPool import *
 from utils.HandleLogging import HandleLogging
 from utils.HandleENV import HandleENV

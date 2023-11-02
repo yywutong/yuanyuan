@@ -3,8 +3,8 @@
 # @Time     : 2022/3/23 10:55
 # @Author   : yuan yuan
 
-from testC4.baseRequest.base_grpc_request import *
-from testC4.baseRequest.parse_file import *
+from APIAuto.baseRequest.base_grpc_request import *
+from APIAuto.baseRequest.parse_file import *
 
 AddOrg = 'AddOrg'
 ListOrgTree = 'ListOrgTree'
