@@ -28,7 +28,7 @@ def reverse_word(ss):
     return " ".join(word[::-1] for word in ss.split())
 
 
-def reverse_word2(ss):
+def reverse_word2(ss):   # 双指针
     li = ss.split()
     i = 0
     j = len(li) - 1
